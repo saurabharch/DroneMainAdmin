@@ -1,0 +1,82 @@
+﻿@model DroneMainAdmin.Models.User
+
+@{
+    ViewBag.Title = "Change Password";
+}
+<style>
+    .thick-green-border {
+        border-color: black;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 50%;
+    }
+
+    .smaller-image {
+        width: 100px;
+    }
+</style>
+<div class="header-foot">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 freeHead_section emailVerification">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="page-head-title wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">
+                                <img class="smaller-image thick-green-border" src="~/images/promaxLogo.png" alt="Drone Fest logo"><hr />
+                                <div class="title-area">
+                                    <h2 class="title">CHANGE <span>PASSWORD</span></h2>
+                                </div><hr />
+                             @if (ViewBag.Status == false && ViewBag.Message==null)
+                             {
+                                <div class="head-content">
+                                    @if (ViewBag.Status == false && ViewBag.Message== "Invalid Request")
+                                    {
+                                        <i class="glyphicon glyphicon-remove-circle"></i>
+                                        <h1>@ViewBag.Message</h1>
+                                        
+
+                                    }
+                                    <div class="form-group" style="margin-left:221px;">
+                                       
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control",@placeholder="New Password" } })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })<br/>
+                                            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" ,@placeholder="Confrime Password"} })
+                                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Submit" class="btn btn-sm btn-pink" />
+                                        <a href="http://localhost:26309/User/Login" title="Back to home"><i class="glyphicon glyphicon-arrow-left hvr-icon-buzz"></i> Back to home</a>
+                                    </div>
+                                   
+                                 </div>
+                             }
+                             else if (ViewBag.Status != false)
+                             {
+                                <i class="glyphicon glyphicon-ok"></i>
+                                 <p>@ViewBag.Message</p>
+                                 
+                                <div class="head-content">
+                                   <a href="http://localhost:26309/User/Login" title="Back to home"><i class="glyphicon glyphicon-arrow-left hvr-icon-buzz"></i> Back to home</a>
+                                </div>
+                 }
+                 else
+                 {
+                                <h1>@ViewBag.Message</h1>
+                                <i class="glyphicon glyphicon-remove-circle"></i>
+                                <div class="head-content">
+                                    <a href="http://localhost:26309/User/Login" title="Back to home"><i class="glyphicon glyphicon-arrow-left hvr-icon-buzz"></i> Back to home</a>
+                                </div>
+                  }
+
+                  </div>
+                               
+                }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

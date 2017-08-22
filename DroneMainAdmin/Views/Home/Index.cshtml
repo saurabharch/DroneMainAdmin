@@ -1,0 +1,81 @@
+﻿@*@model IEnumerable<DroneMainAdmin.Models.User>*@
+@{
+
+    ViewBag.Title = "Home";
+    //Layout = null;
+}
+<div class="container">
+    <div class="col-md-12" style="text-align:center;">
+        <h1 style="color:darkkhaki;font-family:Arial;font-size:151px;">Coming Soon....</h1>
+    </div>
+</div>
+
+@section scripts{
+    
+
+}
+<style>
+    .alert-minimalist {
+        background-color: rgba(164, 215, 119, 0.30);
+        border-color: rgba(149, 149, 149, 0.3);
+        border-radius: 3px;
+        color: #eb6431;
+        padding: 10px;
+    }
+
+        .alert-minimalist > [data-notify="icon"] {
+            height: 50px;
+            margin-right: 12px;
+        }
+
+        .alert-minimalist > [data-notify="title"] {
+            color:whitesmoke;
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .alert-minimalist > [data-notify="message"] {
+            font-size: 80%;
+        }
+</style>
+<script>
+    $(document).ready(function () {
+       var noti =  $.notify({
+         // option
+           icon: 'glyphicon glyphicon-user',
+           title: '<strong><i class="fa fa-user-circle-o"style="height:30px;" aria-hidden="true"></i> Welcome: @HttpContext.Current.User.Identity.Name</strong> ',
+            message:'<p style="color:black;">@ViewBag.Message</p>',
+            url: '/Home/Index',
+            target: '_blank'
+        }, {
+            // settings
+            element: 'body',
+            type: "minimalist",
+            allow_dismiss: true,
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: 20,
+            spacing: 10,
+            z_index: 1031,
+            delay: 5000,
+            timer: 1000,
+            url_target: '_blank',
+            animate: {
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
+            },
+
+            icon_type: 'images',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+		'<img data-notify="icon" class="img-circle pull-left">' +
+		'<span data-notify="title">{1}</span>' +
+		'<span data-notify="message">{2}</span>' +
+	'</div>'
+
+        });
+
+    })
+</script>

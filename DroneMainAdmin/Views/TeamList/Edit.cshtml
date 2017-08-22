@@ -1,0 +1,268 @@
+﻿
+@model DroneMainAdmin.Models.User
+@using (Html.BeginForm("Edit", "TeamList", FormMethod.Post, new { id = "dialog-alert" }))
+{
+    if (Model != null && Model.UserID > 0)
+    {
+        @Html.HiddenFor(a => a.UserID)
+    }
+    @Html.AntiForgeryToken()
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-12">
+                    <section id="contact">
+                        <div class="title-area" style="margin-top: -82px;">
+                            <h2 class="title">UPDATE<span> HERE</span></h2>
+                        </div>
+                        <div class="container">
+                            <div class="row" style="background-color: rgba(255, 255, 255, 0.1); margin-top: 20px; padding: 30px;">
+                                <form id="myForm">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">First Name</label>
+                                            @Html.EditorFor(a => a.FirstName, new { @class = "form-control", @placeholder = "First Name" })
+                                            @Html.ValidationMessageFor(a => a.FirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-15px;">Middle Name</label>
+                                            @Html.EditorFor(a => a.MiddleName, new { @class = "form-control", @placeholder = "Middle Name" })
+                                            @Html.ValidationMessageFor(a => a.MiddleName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Last Name</label>
+                                            @Html.EditorFor(a => a.LastName, new { @class = "form-control", @placeholder = "Last Name" })
+                                            @Html.ValidationMessageFor(a => a.LastName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;;margin-left:33px;">Email</label>
+                                            @Html.EditorFor(a => a.EmailID, new { @class = "form-control", @placeholder = "Email ID" })
+                                            @Html.ValidationMessageFor(a => a.EmailID, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-27px;">New Password</label>
+                                            @Html.EditorFor(a => a.Password, new { @class = "form-control", @placeholder = "Password" })
+                                            @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-52px;">Confirm Password</label>
+                                            @Html.EditorFor(a => a.Password, new { @class = "form-control", @placeholder = "Confirm Password" })
+                                            @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-8px;">Contact No.</label>
+                                            @Html.EditorFor(a => a.ContactNo, new { @class = "form-control", @placeholder = "eg. +91 9876543210" })
+                                            @Html.ValidationMessageFor(a => a.ContactNo, "", new { @class = "text-danger" })
+                                            <div class="col-md-11">
+                                                <span id="valid-msg" class="alert alert-success glyphicon glyphicon glyphicon-ok hide" role="alert">Valid</span>
+                                                <span id="error-msg" class="alert alert-danger glyphicon glyphicon glyphicon-exclamation-sign hide" role="alert">Invalid Number</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-7px;">Team Name</label>
+                                            @Html.EditorFor(a => a.TeamName, new { @class = "form-control", @placeholder = "Team Name" })
+                                            @Html.ValidationMessageFor(a => a.TeamName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                <div class="col-sm-offset-4 col-md-12">
+                    <label style="color:whitesmoke;margin-left:17px;">Country</label>
+                    @Html.EditorFor(a => a.CountryName, new { @class = "form-group", @placeholder = "Country" })
+                    @Html.ValidationMessageFor(a => a.CountryName, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-58px;">Establishment Date</label>
+                                            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", @value = "@ViewBag.DateSet" } })
+                                            @Html.ValidationMessageFor(a => a.DateOfBirth, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                        <div class="col-md-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:12px;">Address</label>
+                                            @Html.EditorFor(model => model.AddresL, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Your Address Here", @style = "margin-left:45px;" } })
+                                            @Html.ValidationMessageFor(model => model.AddresL, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Country</label>
+                                            @*@Html.EditorFor(model => model.CountryName, new { htmlAttributes = new { @class = "form-control", @placeholder = "eg. India" } })*@
+                                            @Html.DropDownListFor(model => model.CountryName, ViewBag.SelectValue as SelectList, "Select Country", new { @id = "idcountry", @class = "form-control", @style = "margin-left:42px;" })
+                                            @Html.ValidationMessageFor(model => model.CountryName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                        <div class="col-md-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">State/Provinance</label>
+                                            @if (ViewBag.StateSelect != null)
+                                            {
+                                                @Html.DropDownListFor(model => model.Provinance, ViewBag.StateSelect as SelectList, "Select State", new { @id = "state_id", @class = "form-control", @placeholder = "State/Provinance Name", @style = "margin-left:42px;" })
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                        <div class="col-md-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">City</label>
+                                            @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "City Name", @style = "margin-left:42px;" } })
+                                            @*@Html.DropDownListFor(model => model.CityName, ViewBag.CountryName as SelectList, "-- Select Country --", new { id = "idcountry", @class = "form-control" })*@
+                                            @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                        <div class="col-md-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Street</label>
+                                            @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @placeholder = "Street Name", @style = "margin-left:42px;" } })
+                                            @*@Html.DropDownListFor(model => model.CityName, ViewBag.CountryName as SelectList, "-- Select Country --", new { id = "idcountry", @class = "form-control" })*@
+                                            @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                        <div class="col-md-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Zip/Pincode</label>
+                                            @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Zip/Pincode", @style = "margin-left:42px;" } })
+                                            @*@Html.DropDownListFor(model => model.CityName, ViewBag.CountryName as SelectList, "-- Select Country --", new { id = "idcountry", @class = "form-control" })*@
+                                            @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke;margin-left:-12px;">Description   </label>
+                                            @Html.EditorFor(a => a.Decscript, new { @class = "form-control", @placeholder = "Introduce Yourself", @style = "margin-left:-29px;width:350;height:80;border-radius:10px;" })
+                                            @Html.ValidationMessageFor(a => a.Decscript, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Verified Email</label>
+                                            <div class="checkbox">
+                                                @Html.EditorFor(a => a.IsEmailVerified, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(a => a.IsEmailVerified, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Admin Type</label>
+                                            <div class="checkbox">
+                                                @Html.EditorFor(a => a.AdminType, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(a => a.AdminType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-md-12">
+                                            <label style="color:whitesmoke">Eamil Subscription</label>
+                                            <div class="checkbox">
+                                                @Html.EditorFor(a => a.SubEmail, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(a => a.SubEmail, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-md-6">
+                                            @*<a class="btn btn-lg btn-success" href="/TeamList/Edit?=14">Save</a>*@
+                                            <input type="submit" value="Save" class="btn btn-success" />
+                                            <a class="btn btn-lg btn-danger" href="/TeamList">Cancel</a>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                    </div>
+
+            </div>
+
+        </div>
+        </div>
+
+}
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Content("/Scripts/intlTelInput.js")"></script>
+    <script type="text/javascript">
+                var telInput = $("#mobile-number"),
+            errorMsg = $("#error-msg"),
+            validMsg = $("#valid-msg");
+                //initialise plugin
+                telInput.intlTelInput({
+                    utilsScript: "~/Scripts/utils.js"
+                });
+
+                //on blur: validate
+                telInput.blur(function () {
+                    if ($.trim(telInput.val())) {
+                        if (telInput.intlTelInput("isValidNumber")) {
+                            validMsg.removeClass("hide");
+                            errorMsg.addClass('hide');
+                        } else {
+                            telInput.addClass("error");
+                            errorMsg.removeClass("hide");
+                            validMsg.addClass('hide');
+
+                        }
+                    }
+                });
+
+                //on Keydown: reset
+                telInput.keydown(function () {
+                    telInput.removeClass("error");
+                    errorMsg.addClass("hide");
+                    validMsg.addClass("hide")
+                });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#idcountry").change(function () {
+                $.get("/User/GetStateById", { ID: $("#idcountry").val() }, function (data) {
+                    $("#state_id").empty();
+                    $.each(data, function (index, row) {
+                        $("#state_id").append("<option value='" + row.state_id + "'>" + row.name + "</option>")
+                    });
+                })
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            var myformdata = $("#myForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/TeamList/Edit?id="+UserID,
+                data: myformdata,
+                success: function () {
+                    $.notify(UserID.messgae, "success");
+                    
+                }
+            })
+        });
+    </script>
+
+    }

@@ -1,0 +1,50 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+   /*background-color: #7A80DD !important;*/ 
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+/*/Site HeaderLogo/*/
+
+.site-logo  {     
+ background-image: url(../images/logo.png);background-repeat:no-repeat;
+ display: block;       
+ width: 200px;       
+ height: 200px;       
+ text-indent: -9999px;  /*hides the link text*/ 
+  } 
+
+.main_col {width:1170px;margin-left:-19px;}
+.register-btn a {    padding: 7px 11px;
+                    border-radius: 3px;
+                    border: 1px solid rgba(0,0,0,0.25);
+                    color: #000;text-decoration:none;}
+
+.register-btn a:hover {    padding: 7px 11px;
+                    border-radius: 3px;
+                    border: 1px solid rgba(0,0,0,0.25);
+                    color: #fff;text-decoration:none;background:#000;}
+
+.btn-pink {background-color: #ef4f85; border-color: #ef4f85; color: #fff; font-weight: 500; text-transform: uppercase;}
+
+.field-validation-error{
+    color:#e80c4d;
+    font-weight:bold;
+}
+input.input-validation-error{
+    border:1px solid #e80c4d;
+}
+
+

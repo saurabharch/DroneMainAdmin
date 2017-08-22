@@ -1,0 +1,323 @@
+﻿@model DroneMainAdmin.Models.User
+
+@{
+    ViewBag.Title = "Drone Fest Registration";
+}
+<div class="col-md-12" >
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-12">
+
+                <section id="contact">
+                    <div class="title-area" style="margin-top: -82px;">
+                        <h2 class="title">REGISTER<span> HERE</span></h2>
+                    </div>
+                    @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Satus))
+                  {
+                if (ViewBag.Message != null)
+                {
+                            <div class="alert alert-success">
+                                <strong>Success !!!</strong>@ViewBag.Message
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="container">
+                                <div class="row" style="background-color: rgba(255, 255, 255, 0.1); margin-top: 20px; padding: 30px;">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <h4 class="text-center" style="color:white">Get In Touch With Us</h4>
+                                        <p class="text-center" style="color:white">Please fill your details below and our executive will get back to you.</p>
+                                        <div class="contact-area">
+                                            <div class="contact-form">
+                                                @Html.ValidationSummary(true,"", new { @class = "text-danger" })
+                                                @*@Html.HiddenFor(model => model.UserID)*@
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "First Name" } })
+                                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "notifyjs-center" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Middle Name" } })
+                                                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last Name" } })
+                                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.EmailID, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Eamil ID" } })
+                                                        @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "control-label col-md-3 glyphicon glyphicon-phone-alt" })*@
+                                                    <div class="col-md-offset-4 col-md-8">
+                                                        @Html.EditorFor(model => model.ContactNo, new { htmlAttributes = new { type = "tel", @class = "intl-tel-input form-control", @id = "mobile-number", @placeholder = "eg. +91 9876543210" } })
+                                                        <div class="col-md-11">
+                                                            <span id="valid-msg" class="alert alert-success glyphicon glyphicon glyphicon-ok hide" role="alert">Valid</span>
+                                                            <span id="error-msg" class="alert alert-danger glyphicon glyphicon glyphicon-exclamation-sign hide" role="alert">Invalid Number</span>
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Confirme Password" } })
+                                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.TeamName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Team Name" } })
+                                                        @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-md-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.AddresL, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Your Address Here" } })
+                                                       
+                                                        @Html.ValidationMessageFor(model => model.AddresL, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                  <div class="col-md-offset-4 col-md-12">
+                                                        @*@Html.EditorFor(model => model.CountryName, new { htmlAttributes = new { @class = "form-control", @placeholder = "eg. India" } })*@
+                                                        @Html.DropDownListFor(model => model.CountryName, ViewBag.SelectValue as SelectList,"Select Country", new {@id = "idcountry", @class = "form-control"})
+                                                        @Html.ValidationMessageFor(model => model.CountryName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-md-offset-4 col-md-12">
+                                                       @*<select id="St" class="form-control">
+                                                       
+                                                       </select>*@
+                                                       @if (ViewBag.StateSelect != null)
+                                                       {
+                                                         @Html.DropDownListFor(model => model.Provinance,ViewBag.StateSelect as SelectList,"Select State" ,new{@id="state_id", @class = "form-control", @placeholder = "State/Provinance Name" })
+                                                       }
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-md-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "City Name" } })
+                                                        @*@Html.DropDownListFor(model => model.CityName, ViewBag.CountryName as SelectList, "-- Select Country --", new { id = "idcountry", @class = "form-control" })*@
+                                                        @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-md-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @placeholder = "Street Name" } })
+                                                        @*@Html.DropDownListFor(model => model.CityName, ViewBag.CountryName as SelectList, "-- Select Country --", new { id = "idcountry", @class = "form-control" })*@
+                                                        @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-md-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Zip/Pincode" } })
+                                                        @*@Html.DropDownListFor(model => model.CityName, ViewBag.CountryName as SelectList, "-- Select Country --", new { id = "idcountry", @class = "form-control" })*@
+                                                        @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @*@Html.LabelFor(model => model.Decscript, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                                                    <div class="col-sm-offset-4 col-md-12">
+                                                        @Html.EditorFor(model => model.Decscript, new { htmlAttributes = new { @class = "form-control", @placeholder = "Brief Intoduction About Self/Team", @cols = "20", @rows = "2" } })
+                                                        @Html.ValidationMessageFor(model => model.Decscript, "", new { @class = "" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-offset-4 col-md-1">
+                                                    <label class="control-label checkbox" style="color:honeydew">Accept T&C</label>
+                                                    @*@Html.LabelFor(model => model.TermsAccepted, htmlAttributes: new { @class = "control-label checkbox", @style = "color:white" })*@
+                                                    @Html.EditorFor(model => model.TermsAccepted)
+                                                    @Html.ValidationMessageFor(model => model.TermsAccepted, "", new { @class = "text-danger" })
+
+                                                </div>
+
+                                                <div class="col-md-1" style="padding-left:120px;">
+                                                    <label class="control-label checkbox" style="color:honeydew;">Subscribe Email NewsLetter</label>
+                                                    @*@Html.LabelFor(model => model.SubEmail, htmlAttributes: new { @class = "control-label checkbox", @style = "color:white" })*@
+                                                    @Html.EditorFor(model => model.SubEmail)
+                                                    @Html.ValidationMessageFor(model => model.SubEmail, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-1 col-md-12 col-sm-12">
+                                                        <hr />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-5 col-md-8 col-sm-8">
+                                                        <input type="submit" value="SUBMIT" class="send-btn" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Error !!!</strong>@ViewBag.Message
+                                </div>
+                            }
+                        }
+                    }
+
+
+                    <br />
+                     
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@Url.Content("/Scripts/intlTelInput.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $("#idcountry").change(function () {
+                $.get("/User/GetStateById", { ID: $("#idcountry").val() }, function (data) {
+                    $("#state_id").empty();
+                    $.each(data, function (index, row) {
+                        $("#state_id").append("<option value='" + row.state_id + "'>" + row.name + "</option>")
+                    });
+                })
+            });
+        });
+    </script>
+    <script type="text/javascript">
+                var telInput = $("#mobile-number"),
+            errorMsg = $("#error-msg"),
+            validMsg = $("#valid-msg");
+                //initialise plugin
+                telInput.intlTelInput({
+                    utilsScript: "~/Scripts/utils.js"
+                });
+
+                //on blur: validate
+                telInput.blur(function () {
+                    if ($.trim(telInput.val())) {
+                        if (telInput.intlTelInput("isValidNumber")) {
+                            validMsg.removeClass("hide");
+                            errorMsg.addClass('hide');
+                        } else {
+                            telInput.addClass("error");
+                            errorMsg.removeClass("hide");
+                            validMsg.addClass('hide');
+
+                        }
+                    }
+                });
+
+                //on Keydown: reset
+                telInput.keydown(function () {
+                    telInput.removeClass("error");
+                    errorMsg.addClass("hide");
+                    validMsg.addClass("hide")
+                });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.notify({
+                // options
+                icon: 'glyphicon glyphicon-pushpin',
+                title: '<strong>Welcome Guest</strong>',
+                message: '@ViewBag.Message',
+                url: '/User/Registration',
+                target: '_blank'
+            }, {
+                // settings
+                element: 'body',
+                position: null,
+                type: "success",
+                allow_dismiss: false,
+                newest_on_top: false,
+                showProgressbar: true,
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+                delay: 5000,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: null,
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
+                onShow: null,
+                onShown: null,
+                onClose: null,
+                onClosed: null,
+                icon_type: 'class',
+                template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                    '<span data-notify="icon"></span> ' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span data-notify="message">{2}</span>' +
+                    '<div class="progress" data-notify="progressbar">' +
+                        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                    '</div>' +
+                    '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                '</div>',
+                
+            });
+            
+        })
+    </script>
+    @*<script type="text/javascript">
+            $("#mobile-number").intlTelInput();
+        </script>*@
+}

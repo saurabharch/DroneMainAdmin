@@ -1,0 +1,74 @@
+﻿
+@model DroneMainAdmin.Models.User
+
+<h2>Delete Member</h2>
+@using (Html.BeginForm("delete", "TeamList", FormMethod.Post, new { id = "popupForm" }))
+{
+    @Html.HiddenFor(a => a.UserID)
+
+    <div class="form-group">
+        <label>First Name</label>
+        <p>@Model.FirstName</p>
+    </div>
+
+    <div class="form-group">
+        <label>Middle Name</label>
+        <p>@Model.MiddleName</p>
+    </div>
+
+    <div class="form-group">
+        <label>Last Name</label>
+        <p>@Model.LastName</p>
+    </div>
+
+    <div class="form-group">
+        <label>Email ID</label>
+        <p>@Model.EmailID</p>
+    </div>
+
+    <div class="form-group">
+        <label>Team Name</label>
+        <p>@Model.TeamName</p>
+    </div>
+
+    <div class="form-group">
+        <label>Estd. Date</label>
+        <p>@Model.DateOfBirth</p>
+    </div>
+
+    <div class="form-group">
+        <label>Contact No.</label>
+        <p>@Model.CountryName</p>
+    </div>
+
+    <div class="form-group">
+        <label>Country</label>
+        <p>@Model.CountryName</p>
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <p>@Model.Decscript</p>
+    </div>
+
+    <div class="form-group">
+        <label>Subscribe Email</label>
+        <p>@Model.SubEmail</p>
+    </div>
+
+    <div class="form-group">
+        <label>Verified</label>
+        <p>@Model.IsEmailVerified</p>
+    </div>
+
+    <div class="form-group">
+        <label>Is Admin</label>
+        <p>@Model.AdminType</p>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <input type="submit" value="Delete" class="btn btn-sm btn-warning" />
+        </div>
+    </div>
+}

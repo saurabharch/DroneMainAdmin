@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Drone Fest Account Verification";
+}
+    <div class="header-foot">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 freeHead_section emailVerification">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+                            {
+
+
+                                <div class="page-head-title wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">
+                                    <img src="~/images/promaxLogo.png" alt="logo">
+                                    <h1>Registration Successful</h1>
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </div>
+                                <div class="head-content">
+                                    <p>Your account has been created and an activation link has been sent to your registered Email address. Note that you must activate your account before login.</p>
+                                    <a href="http://localhost:26309/User/Login" title="Back to home"><i class="glyphicon glyphicon-arrow-left hvr-icon-buzz"></i> Back to home</a>
+                                </div>
+
+
+                            }
+                            else
+                            {
+                                <div class="page-head-title wow fadeInDown" style="visibility: visible; animation-name: fadeInDown;">
+                                    <img src="~/images/promaxLogo.png" alt="logo">
+                                    <h1>Invalid Request</h1>
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </div>
+                                <div class="head-content">
+                                    <p>Your account has been already Verified this is an Invalid Request of Validation</p>
+                                    <a href="http://localhost:26309/User/Login" title="Back to home"><i class="glyphicon glyphicon-arrow-left hvr-icon-buzz"></i> Back to home</a>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

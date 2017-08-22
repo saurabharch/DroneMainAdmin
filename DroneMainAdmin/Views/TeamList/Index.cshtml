@@ -1,0 +1,510 @@
+﻿@*@model IEnumerable<DroneMainAdmin.Models.User>*@
+@{
+
+    ViewBag.Title = "Registered User's";
+    //Layout = null; class="table table-striped table-bordered" style="width:100%; margin-top: 10px;
+}
+
+ <div class="table" style="width:100%;margin-top:20px;">
+    <a class="btn btn-success" style="margin-bottom:20px;margin-top:20px;margin-left:10px;" onclick="PopupForm('@Url.Action("AddOrEdit","TeamList")')"><i class="fa fa-plus"></i> Register New</a>
+    <div class="col-md-10 panel panel-info" style="width:100%;">
+        <div class="panel-title title-area" style="text-align:center;">
+            <h2 class="title">REGISTERED US<span>ERS - DATA LIST</span></h2>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <table id="MyDataTable" class="table table-striped table-bordered table-responsive" style="width:80%; margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">First Name</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Middle Name</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Last Name</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Email ID</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Contact Number</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Team Name</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Est. Date</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Adress</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Street Name/Road</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">City Name</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Provinance/State Name</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Pincode/ZIP</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Country</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Visa Status</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">NoC Certified</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Description</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Verified</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Subscription</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Admin</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Current Activation Code</th>
+                            <th style="background-color:#333;color:whitesmoke;width:auto;" align="center">Update Here</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer" style="width:100%;text-align:center;">
+            <h4>Update User Profile or Add New Registration Here</h4>
+        </div>
+    </div>
+</div>
+
+@*@foreach (var item in Model)
+    {
+        <tr>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.FirstName)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.MiddleName)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.LastName)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.EmailID)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.ContactNo)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.TeamName)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.CountryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelIteml => item.DateOfBirth)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.AdminType)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.Decscript)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.IsEmailVerified)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.SubEmail)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelIteml => item.TermsAccepted_)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "lnkEdit" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.UserID }, new { @class = "lnkDetail" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserID }, new { @class = "lnkDelete" })
+            </td>
+        </tr>
+    }*@
+
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .alert-minimalist {
+	background-color: rgb(241, 242, 240);
+	border-color: rgba(149, 149, 149, 0.3);
+	border-radius: 3px;
+	color: rgb(149, 149, 149);
+	padding: 10px;
+}
+.alert-minimalist > [data-notify="icon"] {
+	height: 50px;
+	margin-right: 12px;
+}
+.alert-minimalist > [data-notify="title"] {
+	color: rgb(51, 51, 51);
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.alert-minimalist > [data-notify="message"] {
+	font-size: 80%;
+}
+</style>
+
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script>
+    var Popup, dataTable;
+    $(document).ready(function () {
+        //$('#MyDataTable').DataTable();
+        GetTeams();
+    })
+    var GetTeams = function () {
+        $.ajax({
+            type: "Get",
+            url: "/TeamList/GetTeams",
+            success: function (response) {
+                BindDataTable(response);
+            }
+        })
+    }
+
+    var BindDataTable = function (response) {
+        $('#MyDataTable').DataTable({
+            "aaData": response,
+            "aoColumns": [
+                {
+                    "mData": "FirstName",
+                    "render": function FName(FirstName, type, full, meta) {
+                        return full.FirstName;
+                    }
+                },
+                {
+                    "mData": "MiddleName",
+                    "render": function MName(MiddleName, type, full, meta) {
+                        return full.MiddleName;
+                    }
+                },
+                {
+                    "mData": "LastName",
+                    "render": function LName(LastName, type, full, meta) {
+                        return full.LastName;
+                    }
+                },
+                {
+                    "mData": "EmailID",
+                    "render": function (EmailID, type, full, meta) {
+                        return '<a onclick="AddOrEdit(' + full.EmailID + ')"><i class="glyphicon glyphicon-user" style="color:black;"></i> ' + full.EmailID + '</a>'
+                    }
+                },
+                {
+                    "mData": "ContactNo",
+                    "render": function Contact(ContactNo, type, full, meta) {
+                        return full.ContactNo;
+                    }
+                },
+                {
+                    "mData": "TeamName",
+                    "render": function Team(TeamName, type, full, meta) {
+                        return full.TeamName;
+                    }
+                },
+                {
+                    "mData": "DateOfBirth",
+                    "render": function ToJavaScriptDate(DateOfBirth) {
+                        var pattern = /Date\(([^)]+)\)/;
+                        var results = pattern.exec(DateOfBirth);
+                        var dt = new Date(parseFloat(results[1]));
+                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                    }
+                },
+                {
+                    "mData": "AddresL",
+
+                    "render": function Address(AddresL, type, full, meta) {
+                        return full.AddresL;
+                    }
+                },
+                {
+                    "mData": "Street",
+                    "render": function Street(Street, type, full, meta) {
+                        return full.Street;
+                    }
+                },
+                {
+                    "mData": "CityName",
+                    "render": function City(CityName, type, full, meta) {
+                        return full.CityName;
+                    }
+                },
+                {
+                    "mData": "Provinance",
+                    "render": function provi(Provinance, type, full, meta) {
+                        return full.Provinance;
+                    }
+                },
+                {
+                    "mData": "Pincode",
+                    "render": function Pin(Pincode, type, full, meta) {
+                        return full.Pincode;
+                    }
+                },
+                {
+                    "mData": "CountryName",
+                    "render": function Country(CountryName, type, full, meta) {
+                        return full.CountryName;
+                    }
+                },
+                {
+                    "mData": "Visachk",
+                    "render": function chkvisa(Visachk, type, full, meta) {
+                        if (!full.Visachk) {
+                            return '<a href="#" onclick="AddOrEdit(' + Visachk + ')" style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red;"></i> No-Visa</a>'
+                        }
+                        else {
+                            return '<a href="#" onclick="AddOrEdit(' + Visachk + ')"><i class="fa fa-check-circle" aria-hidden="true" style="color:green;"></i> Approved Visa</a>'
+                        }
+                    }
+                },
+                {
+                    "mData": "Nocchk",
+                    "render": function chknoc(Nocchk, type, full, meta) {
+                        if (!full.Nocchk) {
+                            return '<a href="#" onclick="AddOrEdit(' + Nocchk + ')" style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red;"></i> No-NoC</a>'
+                        }
+                        else {
+                            return '<a href="#" onclick="AddOrEdit(' + Nocchk + ')"><i class="fa fa-check-circle" aria-hidden="true" style="color:green;"></i> Certified</a>'
+                        }
+                    }
+                },
+                { "mData": "Decscript" },
+                {
+                    "mDate": "IsEmailVerified",
+                    "render": function chktruef(IsEmailVerified, type, full, meta) {
+                        if (!full.IsEmailVerified) {
+                            return '<a href="#" onclick="AddOrEdit(' + IsEmailVerified + ')" style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red;"></i> Fake</a>'
+                        }
+                        else {
+                            return '<a href="#" onclick="AddOrEdit(' + IsEmailVerified + ')"><i class="fa fa-check-circle" aria-hidden="true" style="color:green;"></i> Verified</a>'
+                        }
+                    }
+                },
+                {
+                    "mData": "SubEmail",
+                    "render": function chkt(SubEmail, type, full, meta) {
+
+                        if (!full.SubEmail) {
+                            return '<a href="#" onclick="AddOrEdit(' + SubEmail + ')" style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red;"></i> Not-Check</a>'
+                        }
+                        else {
+                            return '<a href="#" onclick="AddOrEdit(' + SubEmail + ')"><i class="fa fa-check-circle" aria-hidden="true" style="color:green;"></i> Subscribe</a>'
+                        }
+                    }
+                },
+                {
+                    "mData": "AdminType",
+                    "render": function cchkf(AdminType, type, full, meta) {
+
+                        if (!full.AdminType) {
+                            return '<a href="#" onclick="AddOrEdit(' + AdminType + ')" style="color:red;"><i class="fa fa-exclamation-circle" aria-hidden="true" style="color:red;"></i> Not-Master</a>'
+                        }
+                        else {
+                            return '<a href="#" onclick="AddOrEdit(' + AdminType + ')"><i class="fa fa-check-circle" aria-hidden="true" style="color:green;"></i> Admin</a>'
+                        }
+                    }
+                },
+                {
+                    "mData": "ActivationCode",
+                    "render": function Code(ActivationCode, type, full, meta) {
+                        return full.ActivationCode;
+                    }
+
+                },
+                {
+                    "mData": "UserID",
+                    "render": function (UserID, type, full, meta) 
+                    {
+                        
+                        return '<a class="btn btn-primary" href="/TeamList/Edit?id=' + UserID + '"><i class="glyphicon glyphicon-pencil" style="width:30px;"></i> Edit</a>  <a class="btn btn-danger" onclick="Delete(' + UserID + ')" style="margin-top:10px;"><i class="glyphicon glyphicon-trash"></i> Delete</a>'
+                    },
+                    "orderable": false,
+                    "searchable":false,
+                    "width":"250px"
+                },
+            ],
+            "language": {
+                "emptyTable": "No Data found , Please click on <b> Register New<b> Button"
+            }
+        })
+    }
+    function Delete(UserID) {
+        if (confirm('Are You Sure to Delete this User and data Record?')) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Delete", "TeamList")/'+UserID,
+                success: function (UserID) {
+                    if(UserID.success)
+                    {
+                        $.notify(UserID.messgae, "success");
+                        GetTeams();
+                    }
+                    else {
+                        $.notify(UserID.messgae, "warn");
+                    }
+                }
+
+            })
+        }
+    }
+    function Edit(UserID) {
+        $.ajax({
+            type: "Get",
+            url: "/TeamList/Edit?id=" + UserID,
+            success: function (UserID) {
+                if (UserID.success) {
+                    $.notify(UserID.message, "success");
+                }
+                else {
+                    $.notify(UserID.message, "warn");
+                }
+            }
+        })
+    }
+    function PopupForm(url) {
+        var formDiv = $('<div/>');
+        $.get(url)
+        .done(function (response) {
+            formDiv.html(response);
+
+            Popup = formDiv.dialog({
+                autoOpen: true,
+                resizable: false,
+                title: 'Fill Form',
+                height: 700,
+                width: 900,
+                success: function(){
+                    if (UserId.success) {
+                        $.notify("@ViewBag.Message", "success");
+                        GetTeams();
+                    }
+                    else {
+                        $.notify("@ViewBag.Message", "success");
+                    }
+                },
+                close: function () {
+                    Popup.dialog('destroy').remove();
+                    $.notify("Form is closed", "success");
+                }
+            })
+        })
+    }
+    var noti = $.notify({
+    // option
+    icon: 'glyphicon glyphicon-pushpin',
+        title: '<strong>@ViewBag.status</strong> ',
+        message: '<p style="color:black;">@ViewBag.Message</p>',
+        url: '/TeamList/Index',
+        target: '_blank'
+    }, {
+    // settings
+    element: 'body',
+        type: "success",
+        allow_dismiss: true,
+        placement: {
+        from: "top",
+            align: "center"
+        },
+        offset: 20,
+        spacing: 10,
+        z_index: 1031,
+        delay: 5000,
+        timer: 1000,
+        url_target: '_blank',
+        animate: {
+        enter: 'animated fadeInDown',
+            exit: 'animated fadeOutUp'
+        },
+
+        icon_type: 'images',
+        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                '<span data-notify="icon"></span> ' +
+                '<span data-notify="title">{1}</span> ' +
+                '<span data-notify="message">{2}</span>' +
+            '</div>',
+
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+       var noti =  $.notify({
+         // option
+         icon: 'http://localhost:26309/images/promaxLogo.png',
+
+           title: '<strong> @HttpContext.Current.User.Identity.Name</strong> ',
+            message:'<p style="color:black;">@ViewBag.Message</p>',
+            url: '/TeamList/Index',
+            target: '_blank'
+        }, {
+            // settings
+            element: 'body',
+            type: "minimalist",
+            allow_dismiss: true,
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: 20,
+            spacing: 10,
+            z_index: 1031,
+            delay: 5000,
+            timer: 1000,
+            url_target: '_blank',
+            animate: {
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
+            },
+
+            icon_type: 'images',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+		'<img data-notify="icon" class="img-circle pull-left">' +
+		'<span data-notify="title">{1}</span>' +
+		'<span data-notify="message">{2}</span>' +
+	'</div>'
+
+        });
+
+    })
+</script>
+ @*<script type="text/javascript">
+       var Popup,dataTable;
+        $(document).ready(function () {
+           dataTable= $('#myDatatable').DataTable({
+                "ajax": {
+                    "url": '/TeamList/GetTeams',
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "FirstName", "autoWidth": true },
+                    { "data": "MiddleName", "autoWidth": true },
+                    { "data": "LastName", "autoWidth": true },
+                    { "data": "EmailID", "autoWidth": true },
+                    { "data": "ContactNo", "autoWidth": true, "defaultContent": "" },
+                    { "date": "TeamName", "autoWidth": true, "defaultContent": "" },
+                    { "data": "DateOfBirth", "formate": "MM-dd-yyyy", "autoWidth": true, "defaultContent": "" },
+                    { "data": "CountryName", "autoWidth": true },
+                    { "data": "Decscript", "autoWidth": true },
+                    { "data": "IsEmailVerified", "autoWidth": true },
+                    { "data": "SubEmail", "autoWidth": true },
+                    { "data": "AdminType", "autoWidth": true },
+                    {
+                        "data": "UserID", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/TeamList/save/' + data + '">Edit</a>';
+                        }
+                    },
+                    {
+                        "data": "UserID", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/TeamList/delete/' + data + '">Delete</a>';
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable":"No Data Found, Please Click on <b>Register</b> For Add New User"
+                }
+            });
+        });
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+            .done(function (response) {
+                formDiv.html(response);
+
+                Popup = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Fill Form',
+                    height: 500,
+                    width: 700,
+                    close: function () {
+                        Popup.dialog('destroy').remove();
+                    }
+                })
+            })
+        }
+    </script>*@

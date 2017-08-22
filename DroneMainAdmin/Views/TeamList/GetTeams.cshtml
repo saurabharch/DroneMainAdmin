@@ -1,0 +1,163 @@
+﻿@*@model IEnumerable<DroneMainAdmin.Models.User>*@
+@{
+
+    ViewBag.Title = "Registered User's";
+    //Layout = null;
+}
+<a class="btn btn-success" style="margin-bottom:20px;margin-top:20px;margin-left:10px;" href="/TeamList/save/0"><i class="fa fa-plus"></i> Register New</a>
+<table id="myDatatable" class="table table-striped table-bordered" style="clear: both; margin-top: 10px;">
+    <thead>
+        <tr>
+            <th style="background-color:#333;color:whitesmoke" align="center">First Name</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Middle Name</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Last Name</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Email ID</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Contact Number</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Team Name</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Est. Date</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Country</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Description</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Verified</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Subscription</th>
+            <th style="background-color:#333;color:whitesmoke" align="center">Admin</th>
+        </tr>
+
+        @*@foreach (var item in Model)
+            {
+                <tr>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.FirstName)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.MiddleName)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.LastName)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.EmailID)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.ContactNo)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.TeamName)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.CountryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelIteml => item.DateOfBirth)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.AdminType)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.Decscript)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.IsEmailVerified)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.SubEmail)
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelIteml => item.TermsAccepted_)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "lnkEdit" }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.UserID }, new { @class = "lnkDetail" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserID }, new { @class = "lnkDelete" })
+                    </td>
+                </tr>
+            }*@
+    </thead>
+</table>
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+             $('#myDatatable').DataTable({
+                "ajax": {
+                    "url": '/TeamList/GetTeams',
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "FirstName", "autoWidth": true },
+                    { "data": "MiddleName", "autoWidth": true },
+                    { "data": "LastName", "autoWidth": true },
+                    { "data": "EmailID", "autoWidth": true },
+                    { "data": "ContactNo", "autoWidth": true, "defaultContent": "" },
+                    { "date": "TeamName", "autoWidth": true, "defaultContent": "" },
+                    { "data": "DateOfBirth", "formate": "MM-dd-yyyy", "autoWidth": true, "defaultContent": "" },
+                    { "data": "CountryName", "autoWidth": true },
+                    { "data": "Decscript", "autoWidth": true },
+                    { "data": "IsEmailVerified", "autoWidth": true },
+                    { "data": "SubEmail", "autoWidth": true },
+                    { "data": "AdminType", "autoWidth": true },
+                    {
+                        "data": "UserID", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/TeamList/save/' + data + '">Edit</a>';
+                        }
+                    },
+                    {
+                        "data": "UserID", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/TeamList/delete/' + data + '">Delete</a>';
+                        }
+                    }
+                ]
+            });
+            $('.tablecontainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                OpenPopup($(this).attr('href'));
+            })
+            function OpenPopup(pageUrl) {
+                $pageContent = $('</div>');
+                $pageContent.load(pageUrl, function () {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                          .html($pageContent)
+                          .dialog({
+                              draggable: false,
+                              autoOpen: false,
+                              rsizable: false,
+                              model: true,
+                              title: 'Member Detail',
+                              height: 580,
+                              width: 600,
+                              close: function () {
+                                  $dialog.dialog('destroy').remove();
+                              }
+                          })
+                $('.popupWindow').on('submit', '#popupForm', function (e) {
+                    var url = $('#popupForm')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialoge.dialoge('close');
+                                oTable.ajax.reload();
+                            }
+                        }
+                    })
+
+                    e.prevent.Default();
+                })
+                $dialog.dialog('open');
+            }
+
+        })
+    </script>
+}

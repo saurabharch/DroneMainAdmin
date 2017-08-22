@@ -1,0 +1,79 @@
+﻿@model DroneMainAdmin.Models.User
+<h2>Save</h2>
+@using (Html.BeginForm("save", "TeamList", FormMethod.Post, new { id = "popupForm" }))
+{
+    if (Model != null && Model.UserID > 0)
+    {
+        @Html.HiddenFor(a => a.UserID)
+    }
+
+    <div class="form-group">
+        <label>First Name</label>
+        @Html.EditorFor(a => a.FirstName, new { @class = "form-group", @placeholder = "First Name" })
+        @Html.ValidationMessageFor(a => a.FirstName, "", new { @class = "text-danger" }))
+    </div>
+    <div class="form-group">
+        <label>Middle Name</label>
+        @Html.EditorFor(a => a.MiddleName, new { @class = "form-group", @placeholder = "Middle Name" })
+        @Html.ValidationMessageFor(a => a.MiddleName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        @Html.EditorFor(a => a.LastName, new { @class = "form-group", @placeholder = "Last Name" })
+        @Html.ValidationMessageFor(a => a.LastName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        @Html.EditorFor(a => a.EmailID, new { @class = "form-group", @placeholder = "Email ID" })
+        @Html.ValidationMessageFor(a => a.EmailID, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Contact No.</label>
+        @Html.EditorFor(a => a.ContactNo, new { @class = "form-group", @placeholder = "eg. +91 9876543210" })
+        @Html.ValidationMessageFor(a => a.ContactNo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Team Name</label>
+        @Html.EditorFor(a => a.TeamName, new { @class = "form-group", @placeholder = "Team Name" })
+        @Html.ValidationMessageFor(a => a.TeamName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Country</label>
+        @Html.EditorFor(a => a.CountryName, new { @class = "form-group", @placeholder = "Country" })
+        @Html.ValidationMessageFor(a => a.CountryName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Est. Date</label>
+        @Html.EditorFor(a => a.DateOfBirth, new { @class = "form-group" })
+        @Html.ValidationMessageFor(a => a.DateOfBirth, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        @Html.EditorFor(a => a.Decscript, new { @class = "form-group", @placeholder = "Introduce Yourself" })
+        @Html.ValidationMessageFor(a => a.Decscript, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>Verified Email</label>
+        <div class="checkbox">
+            @Html.EditorFor(a => a.IsEmailVerified, new { @class = "form-group" })
+            @Html.ValidationMessageFor(a => a.IsEmailVerified, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label></label>
+        <div class="checkbox">
+            @Html.EditorFor(a => a.AdminType, new { @class = "form-group" })
+            @Html.ValidationMessageFor(a => a.AdminType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Eamil Subs</label>
+        <div class="checkbox">
+            @Html.EditorFor(a => a.SubEmail, new { @class = "form-group" })
+            @Html.ValidationMessageFor(a => a.SubEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-lg btn-success" href="javascript:document.getElementById('popupForm').submit()" />
+    </div>
+}
