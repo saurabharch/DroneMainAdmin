@@ -46,5 +46,8 @@ textarea {
 input.input-validation-error{
     border:1px solid #e80c4d;
 }
-
+div.dataTables_wrapper {
+        width: 800px;
+        margin: 0 auto;
+    }
 

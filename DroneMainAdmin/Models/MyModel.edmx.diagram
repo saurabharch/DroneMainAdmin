@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="DroneDBModel.state" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DroneDBModel.User" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="DroneDBModel.FK_states_countries" />
+        <EntityTypeShape EntityType="DroneDBModel.EmailType" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DroneDBModel.CompainSet" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 using DroneMainAdmin.Models;
 using System.Text;
 using System.Data.Entity.Validation;
+using System.Web.UI.WebControls;
+using System.Web.UI;
+using System.IO;
 
 namespace DroneMainAdmin.Controllers
 {
@@ -45,21 +48,42 @@ namespace DroneMainAdmin.Controllers
         [HttpGet]
         public JsonResult GetTeams()
         {
+            bool status = false;
             using (DroneDBEntities dc = new DroneDBEntities())
             {
                 List<User> userList = dc.Users.ToList<User>();
                 ViewBag.Message = "Data Loading..";
                 //var team = dc.Users.OrderBy(a => a.FirstName).ToList();
+               // return Json(new { success = status, messgae = userList }, JsonRequestBehavior.AllowGet);
                 return Json(userList, JsonRequestBehavior.AllowGet);
             }
         }
 
-        // GET: /User/Create
-        public ActionResult Create()
+        [Authorize]
+        [HttpGet]//Get all Annocement
+        public JsonResult GetAnnoucement()
         {
-            return PartialView();
+            bool status = false;
+            using (DroneDBEntities dc = new DroneDBEntities())
+            {
+                List<Annoucement> annouceList = dc.Annoucements.ToList<Annoucement>();
+                return Json(annouceList, JsonRequestBehavior.AllowGet);
+            }
         }
 
+        [HttpGet]
+        public ActionResult PostAnnocement(DroneMainAdmin.Models.Annoucement ano)
+        {
+
+            return View();
+        }
+
+        //[Authorize]
+        //[HttpPost]
+        //public ActionResult PostAnnocement(DroneMainAdmin.Models.Annoucement anno)
+        //{
+        //    return View();
+        //}
         // POST: /User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -111,19 +135,25 @@ namespace DroneMainAdmin.Controllers
                 }
                 catch(Exception ex)
                 {
-                   
-                    
+                    ViewBag.Message = "You are Not Authorize for View This Page";
+                    return RedirectToAction("Index");
+
                 }
+            }
+            else
+            {
+                ViewBag.Message = "You are Not Authorize for View This Page";
+                return RedirectToAction("Index");
             }
             return View(user);
         }
 
         // POST: /User/Edit/5
-       
-        [HttpPost] 
+
+        [Authorize] 
         [ActionName("Edit")]
-        //[Bind(Exclude = "")]
-        public ActionResult Edit(int id,[Bind(Exclude = "ConfirmPassword")]DroneMainAdmin.Models.User user)
+        [HttpPost]
+        public ActionResult Edit([Bind(Exclude = "ConfirmPassword")]DroneMainAdmin.Models.User user)
         {
             bool status = false;
             string message = "";
@@ -134,16 +164,13 @@ namespace DroneMainAdmin.Controllers
                     using (DroneDBEntities db = new DroneDBEntities())
                     {
                         string username = User.Identity.Name;
-                        var v = dbe.Users.Where(a => a.UserID == id).FirstOrDefault();
+                        var v = dbe.Users.Where(a => a.UserID == user.UserID).FirstOrDefault();
                         try
                         {
                             var adminchk = dbe.Users.Where(a => a.EmailID == username).FirstOrDefault();
                             if (v != null && adminchk.AdminType == true)
-
+                            { 
                                 db.Configuration.ValidateOnSaveEnabled = false; // Avoid Confirmation password does not match on save changes
-
-                            if (v==null && adminchk.AdminType == true)
-                            {
                                 v.FirstName = user.FirstName;
                                 v.MiddleName = user.MiddleName;
                                 v.LastName = user.LastName;
@@ -185,7 +212,9 @@ namespace DroneMainAdmin.Controllers
                                 }
                                 try
                                 {
-                                    db.Entry(User).State = System.Data.Entity.EntityState.Modified;
+                                    //  db.Users.Add(v);
+                                    // db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                                    db.Entry(v).State = System.Data.Entity.EntityState.Modified;
                                     db.SaveChanges();
                                 }
                                 catch (DbEntityValidationException ex)
@@ -214,7 +243,7 @@ namespace DroneMainAdmin.Controllers
                                 ViewBag.Message = "You are not Authorize for doing changes in User Record,\n for more contact administrator";
                             }
                         }
-                        catch { }
+                        catch(Exception ex) { }
                         }
                 }
             }
@@ -222,23 +251,6 @@ namespace DroneMainAdmin.Controllers
 
         }
                
-        // GET: /User/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    bool status = false;
-        //    using (DroneDBEntities dbe = new DroneDBEntities())
-        //    {
-        //        var v = dbe.Users.Where(a => a.UserID == id).FirstOrDefault();
-        //        if (v != null)
-        //        {
-        //            dbe.Users.Remove(v);
-        //            dbe.SaveChanges();
-        //            status = true;
-        //            ViewBag.Message = " ";
-        //        }
-        //    }
-        //    return Json(new { success = true, messgae = "Delete Successfully" }, JsonRequestBehavior.AllowGet);
-        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -258,133 +270,133 @@ namespace DroneMainAdmin.Controllers
                 }
         }
         Random rnd = new Random();
-        [Authorize]
-        [HttpPost]
-        public ActionResult Save([Bind(Exclude = "ConfirmPassword")]DroneMainAdmin.Models.User user)
-        {
-            bool status = false;
-            string message = "";
-            if(ModelState.IsValid)
-            {
-                using (DroneDBEntities db = new DroneDBEntities())
-                {
-                    
-                        var v = db.Users.Where(a => a.UserID == user.UserID).FirstOrDefault();
-                        if(v!=null)
-                        {
-                            v.FirstName = user.FirstName;
-                            v.MiddleName = user.MiddleName;
-                            v.LastName = user.LastName;
-                            v.EmailID = user.EmailID;
-                            v.ContactNo = user.ContactNo;
-                            v.TeamName = user.TeamName;
-                        // v.DateOfBirth = user.DateOfBirth;
-                            if(user.IsEmailVerified)
-                            {
-                                v.IsEmailVerified = true;
-                            }
-                            else
-                            {
-                                v.IsEmailVerified = false;
-                            }
-                            v.CountryName = user.CountryName;
-                            if (user.SubEmail)
-                            {
-                                v.SubEmail = true;
-                            }
-                            else
-                            {
-                                v.SubEmail = false;
-                            }
-                            v.Decscript = user.Decscript;
-                            if(user.AdminType == true)
-                           {
-                              v.AdminType = true;
-                           }
-                           else
-                           {
-                            v.AdminType = false;
-                           }
-                        try
-                        {
-                            db.Entry(User).State = System.Data.Entity.EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        catch (Exception error)
-                        {
+        //[Authorize]
+        //[HttpPost]
+        //public ActionResult Save([Bind(Exclude = "ConfirmPassword")]DroneMainAdmin.Models.User user)
+        //{
+        //    bool status = false;
+        //    string message = "";
+        //    if(ModelState.IsValid)
+        //    {
+        //        using (DroneDBEntities db = new DroneDBEntities())
+        //        {
 
-                           
-                        }
-                            status = true;
-                            message = "User Profile is Succesfully Updated";
-                        }
+        //                var v = db.Users.Where(a => a.UserID == user.UserID).FirstOrDefault();
+        //                if(v!=null)
+        //                {
+        //                    v.FirstName = user.FirstName;
+        //                    v.MiddleName = user.MiddleName;
+        //                    v.LastName = user.LastName;
+        //                    v.EmailID = user.EmailID;
+        //                    v.ContactNo = user.ContactNo;
+        //                    v.TeamName = user.TeamName;
+        //                // v.DateOfBirth = user.DateOfBirth;
+        //                    if(user.IsEmailVerified)
+        //                    {
+        //                        v.IsEmailVerified = true;
+        //                    }
+        //                    else
+        //                    {
+        //                        v.IsEmailVerified = false;
+        //                    }
+        //                    v.CountryName = user.CountryName;
+        //                    if (user.SubEmail)
+        //                    {
+        //                        v.SubEmail = true;
+        //                    }
+        //                    else
+        //                    {
+        //                        v.SubEmail = false;
+        //                    }
+        //                    v.Decscript = user.Decscript;
+        //                    if(user.AdminType == true)
+        //                   {
+        //                      v.AdminType = true;
+        //                   }
+        //                   else
+        //                   {
+        //                    v.AdminType = false;
+        //                   }
+        //                try
+        //                {
+        //                    db.Entry(User).State = System.Data.Entity.EntityState.Modified;
+        //                    db.SaveChanges();
+        //                }
+        //                catch (Exception error)
+        //                {
 
-                   else if(v==null)
-                   {
 
-                        
-                        //Model Validation
-                        if (ModelState.IsValid)
-                        {
+        //                }
+        //                    status = true;
+        //                    message = "User Profile is Succesfully Updated";
+        //                }
 
-                            #region //Email is already Exist Check
-                            var isExist = IsEmailExist(user.EmailID);
-                            if (isExist)
-                            {
-                                ModelState.AddModelError("EmailExist", "Email is already Exist");
-                                return View(user);
-                            }
-                            #endregion
-                            #region Generate Activation Code
-                            user.ActivationCode = Guid.NewGuid();
-                            #endregion
-                            #region Password Hashing
-                            string passw = rnd.Next(000092,999999).ToString();
-                            user.Password = passw;
-                            user.Password = Crypto.Hash(passw);
-                            user.ConfirmPassword = Crypto.Hash(passw);
-                            user.IsEmailVerified = true;
-                            #endregion
-                            #region Save Data to Database
-                            using (Entities dc = new Entities())
-                            {
-                                dc.Users.Add(user);
-                                try
-                                {
-                                    dc.SaveChanges();
-                                    SendVerificationLinkEmail(user.EmailID, user.ActivationCode.ToString(),passw);
-                                    message = "Registration is successfully done. Account activation link " +
-                                        " has been sent to your email id : " + user.EmailID+
-                                        "and your Password is :"+passw;
-                                    status = true;
+        //           else if(v==null)
+        //           {
 
-                                }
-                                catch (Exception ex)
-                                {
 
-                                }
-                                //Send Email to Users
-                                return RedirectToAction("Index", "TeamList");
+        //                //Model Validation
+        //                if (ModelState.IsValid)
+        //                {
 
-                            }
-                            #endregion
+        //                    #region //Email is already Exist Check
+        //                    var isExist = IsEmailExist(user.EmailID);
+        //                    if (isExist)
+        //                    {
+        //                        ModelState.AddModelError("EmailExist", "Email is already Exist");
+        //                        return View(user);
+        //                    }
+        //                    #endregion
+        //                    #region Generate Activation Code
+        //                    user.ActivationCode = Guid.NewGuid();
+        //                    #endregion
+        //                    #region Password Hashing
+        //                    string passw = rnd.Next(000092,999999).ToString();
+        //                    user.Password = passw;
+        //                    user.Password = Crypto.Hash(passw);
+        //                    user.ConfirmPassword = Crypto.Hash(passw);
+        //                    user.IsEmailVerified = true;
+        //                    #endregion
+        //                    #region Save Data to Database
+        //                    using (Entities dc = new Entities())
+        //                    {
+        //                        dc.Users.Add(user);
+        //                        try
+        //                        {
+        //                            dc.SaveChanges();
+        //                            SendVerificationLinkEmail(user.EmailID, user.ActivationCode.ToString(),passw);
+        //                            message = "Registration is successfully done. Account activation link " +
+        //                                " has been sent to your email id : " + user.EmailID+
+        //                                "and your Password is :"+passw;
+        //                            status = true;
 
-                        }
-                        else
-                        {
-                            message = "Invalid Request";
-                        }
-                    }
-                    else
-                    {
-                        status = false;
-                        message = "Invalid Request";
-                    }
-                    
-                }
-            }
-            return new JsonResult { Data = new { status = status } };
-        }
+        //                        }
+        //                        catch (Exception ex)
+        //                        {
+
+        //                        }
+        //                        //Send Email to Users
+        //                        return RedirectToAction("Index", "TeamList");
+
+        //                    }
+        //                    #endregion
+
+        //                }
+        //                else
+        //                {
+        //                    message = "Invalid Request";
+        //                }
+        //            }
+        //            else
+        //            {
+        //                status = false;
+        //                message = "Invalid Request";
+        //            }
+
+        //        }
+        //    }
+        //    return new JsonResult { Data = new { status = status } };
+        //}
         public bool IsEmailExist(string emailID)
         {
             using (DroneDBEntities de = new DroneDBEntities())
@@ -392,6 +404,58 @@ namespace DroneMainAdmin.Controllers
                 var EC = de.Users.Where(a => a.EmailID == emailID).FirstOrDefault();
                 return EC != null;// if not equal to null means True
             }
+        }
+        [Authorize]
+        [HttpGet]
+        [ActionName("ExcelSheet")]
+        public ActionResult ExcelExport()
+        {
+             // Step 1 - get the data from database
+                var data = dbe.Users.ToList().Select(
+                 p => new
+                 {
+                     p.UserID,
+                     p.FirstName,
+                     p.LastName,
+                     p.ContactNo,
+                     p.EmailID,
+                     p.AddresL,
+                     p.Street,
+                     p.CityName,
+                     p.Provinance,
+                     p.CountryName,
+                     p.Pincode,
+                     p.Decscript
+                 }
+                ); ;
+
+                // instantiate the GridView control from System.Web.UI.WebControls namespace
+                // set the data source
+                GridView gridview = new GridView();
+                gridview.DataSource = data;
+                gridview.DataBind();
+
+                // Clear all the content from the current response
+                Response.ClearContent();
+                Response.Buffer = true;
+                // set the header
+                Response.AddHeader("content-disposition", "attachment;filename = DroneFestList.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                // create HtmlTextWriter object with StringWriter
+                using (StringWriter sw = new StringWriter())
+                {
+                    using (HtmlTextWriter htw = new HtmlTextWriter(sw))
+                    {
+                        // render the GridView to the HtmlTextWriter
+                        gridview.RenderControl(htw);
+                        // Output the GridView content saved into StringWriter
+                        Response.Output.Write(sw.ToString());
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                return View();
         }
 
         [NonAction]
@@ -401,7 +465,7 @@ namespace DroneMainAdmin.Controllers
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
             var fromEmail = new MailAddress("2advpost@gmail.com", "Promax Scientific Developer's Team");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "~~~Kash007";
+            var fromEmailPassword = "~~~Kashy007";
             string subject = "🔴 DroneFest Account is Successfully Created 🔴";
             //string body = "<br/><br/>We are excited to tell you that your Drone Fest account is" +
             //    " successfully created. Please click on the below link to verify your account" +
@@ -473,7 +537,7 @@ namespace DroneMainAdmin.Controllers
                                                             "</td>" +
                                                             "<td width='408' height='100' style='font-size: 16px; color: #ffffff; text-align: left;" +
                                                             "font-family:'proxima_nova_softregular', Helvetica, Arial, sans-serif; line-height: 24px;'>" +
-                                                            "<a href='mailto:done@drone@dronefest.events' style='color: " +
+                                                            "<a href='mailto:dronefest@dronefest.events' style='color: " +
                                                             "#ffffff;'>drone@dronefest.events</a>" +
                                                             "</td>" +
                                                         "</tr>" +
@@ -482,7 +546,8 @@ namespace DroneMainAdmin.Controllers
                                             "</tr></table>";
             var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com",
+               
+               Host = "smtp.gmail.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -496,7 +561,15 @@ namespace DroneMainAdmin.Controllers
                 Body = body,
                 IsBodyHtml = true
             })
-                smtp.Send(message);
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+
+                   
+                }
         }
 
         [Authorize]
@@ -618,6 +691,7 @@ namespace DroneMainAdmin.Controllers
                     #endregion
                     #region Generate Activation Code
                     user.ActivationCode = Guid.NewGuid();
+                    user.GlobalID = Guid.NewGuid();
                     #endregion
                     #region Password Hashing
                     string passw = rnd.Next(000092, 999999).ToString();
@@ -658,7 +732,7 @@ namespace DroneMainAdmin.Controllers
                         {
                             dc.Users.Add(user);
                             dc.SaveChanges();
-                            SendVerificationLinkEmail(user.EmailID, user.ActivationCode.ToString(), passw);
+                            SendVerificationLinkEmail(user.EmailID, user.GlobalID.ToString(), passw);
                             message = "Registration is successfully done. Account activation link " +
                                 " has been sent to your email id : " + user.EmailID;
                             Status = true;
@@ -696,6 +770,201 @@ namespace DroneMainAdmin.Controllers
             }
 
             return Json(new { success = true, messgae = "Added Successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        public void EmailSwitch(string[] email)
+        {
+            using (DroneDBEntities dc = new DroneDBEntities())
+            {
+                string[] ToList = dc.Users.Select(x => x.EmailID).ToArray();
+                string[] fromemailList = dc.CompainSets.Select(x => x.email).ToArray();
+                string[] passList = dc.CompainSets.Select(x => x.pass).ToArray();
+                int?[] PortList = dc.CompainSets.Select(x => x.Portno).ToArray();
+                string[] HostList = dc.CompainSets.Select(x => x.Hostname).ToArray();
+                int Toemailcount = ToList.Count();
+                int emailcount = fromemailList.Count();
+                for(int h=0;h<=emailcount;h++)
+                {
+                    for(int g = 0; g <= Toemailcount; g++)
+                    {
+                        var chkvi = dbe.Users.Where(x => x.EmailID == ToList[g].ToString()).FirstOrDefault();
+                        if (!chkvi.Visachk && !chkvi.Nocchk)
+                        {
+                          sendUpdates(fromemailList[h].ToString(), ToList[g].ToString(), passList[h].ToString(), PortList[h].Value, HostList[h].ToString(), 1, 2);
+                        }
+                        else if(!chkvi.Visachk || !chkvi.Nocchk)
+                        {
+                            if(!chkvi.Visachk && chkvi.Nocchk)
+                            {
+                                int visa = 1;
+                                var getId = dbe.Users.Where(x=>x.EmailID == ToList[g].ToString()).FirstOrDefault();
+                                int noc = getId.UserID;
+                                sendUpdates(fromemailList[h].ToString(), ToList[g].ToString(), passList[h].ToString(), PortList[h].Value, HostList[h].ToString(), visa, noc);
+                            }
+                            else
+                            {
+                                int visa = 0;
+                                //int noc = 2;
+                                var getId = dbe.Users.Where(x => x.EmailID == ToList[g].ToString()).FirstOrDefault();
+                                int noc = getId.UserID;
+                                sendUpdates(fromemailList[h].ToString(), ToList[g].ToString(), passList[h].ToString(), PortList[h].Value, HostList[h].ToString(), visa, noc);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        [NonAction]
+        public void sendUpdates(string fromemail, string emailid,string pass,int portnumber,string hostt, int vi ,int no)
+        {
+            var visaUp = "/User/Upload/" + no;
+            var NoUp = "/ User / Upload / " + no;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, visaUp);
+            var fromEmailPassword = pass;
+            var msgSub = dbe.EmailTypes.Where(x => x.Id == vi).FirstOrDefault();
+            string display = msgSub.DisplayName;
+            var fromEmail = new MailAddress(fromemail,display);
+            var toEmail = new MailAddress(emailid);
+            string subject = msgSub.Subjectmsg;
+            string body = msgSub.BodyMsg;
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(message);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [ActionName("EmailUpdate")]
+        public ActionResult EmailSend(int id)
+        {
+            bool status = false;
+            string msg;
+            string toemail;
+            if (User.Identity.IsAuthenticated)
+            {
+                string username = User.Identity.Name;
+
+                using (DroneDBEntities dbe = new DroneDBEntities())
+                {
+                    var v = dbe.Users.Where(a => a.UserID == id).FirstOrDefault();
+                    try
+                    {
+                        var adminchk = dbe.Users.Where(a => a.EmailID == username).FirstOrDefault();
+                        if (v != null && v.IsEmailVerified && adminchk.AdminType == true)
+                        {
+                            string secret = Convert.ToString(v.GlobalID);
+                            toemail = v.EmailID;
+                            if(!v.Visachk && !v.Nocchk)
+                            {
+                                string body;
+                               
+                                body = "your Visa and NoC";
+                                sendUpdates(toemail, secret, body);
+                            }
+                            else if(!v.Visachk || !v.Nocchk)
+                            {
+                                string body;
+                                if (v.Nocchk)
+                                {
+                                    body = "your Visa ";
+                                }
+                                else
+                                {
+                                    body = "your NoC ";
+                                }
+                                sendUpdates(toemail, secret, body);
+                            }
+                            msg = "Successfully Send to " + toemail;
+                            status = true;
+                        }
+                        else
+                        { 
+                            msg = "Invalid Send Request";
+                            status = false;
+                        }
+                    }
+                    catch
+                    {
+                        msg = "This is not a verified Email Id";
+                        status = false;
+                    }
+                }
+                ViewBag.Message = msg;
+            }
+
+            return View();
+        }
+
+
+        [NonAction]
+        public void sendUpdates(string emailID, string Guid, string BodyMsg)
+        {
+            bool status;
+            var verifyUrl = "/TeamList/UploadFile/" + Guid;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+            var fromEmail = new MailAddress("2advpost@gmail.com", "Promax Scientific Developer's Team");
+            var toEmail = new MailAddress(emailID);
+            var fromEmailPassword = "~~~Kash007";
+            string subject = "🔴 DronFest Alert 🔴";
+            string body = "<br/><br/>This is a alert message Regarding Submit " +
+                "<b>"+BodyMsg+"</b>  for overseas Drone Fest Alumini Please Follow the Link for Upload your copy of filled Document" +
+                "<br/><br/><a target='_blank' href='" + link + "'>" + link + "</a>";
+            //string body = "";
+            var smtp = new SmtpClient
+            {
+
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+
+                    ViewBag.Message = "Error :" + ex.Message;
+                }
+           
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ActionName("SendtoAll")]
+        public ActionResult SendtoAll()
+        {
+            bool status = false;
+            
+            EmailSwitch(dbe.Users.Select(x => x.EmailID).ToArray());
+            return Json(new { success = status, messgae = ViewBag.Message }, JsonRequestBehavior.AllowGet);
         }
     }
 }

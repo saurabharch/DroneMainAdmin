@@ -19,7 +19,7 @@ namespace DroneMainAdmin.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "First Name Required")]
         public string FirstName { get; set; }
 
-        [Display(Name = "First Name")]
+        [Display(Name = "Middle Name")]
         [RegularExpression(@"^[a-zA-Z'.\s]{1,40}$", ErrorMessage = "Special Characters not allowed")]
         public string MiddleName { get; set; }
 
@@ -80,6 +80,8 @@ namespace DroneMainAdmin.Models
         
         public bool SubEmail { get; set; }
         public System.Guid ActivationCode { get; set; }
+
+        public System.Guid GlobalID { get; set; }
         public bool Visachk { get; set; }
         public bool Nocchk { get; set; }
         public bool AdminType { get; set; }
@@ -94,6 +96,7 @@ namespace DroneMainAdmin.Models
         [DataType(DataType.PostalCode)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Zip/Pincode Number Required")]
         public string Pincode { get; set; }
+
 
     }
     public partial class State

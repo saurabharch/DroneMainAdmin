@@ -147,25 +147,35 @@ namespace DroneMainAdmin.Controllers
         {
             bool Status = false;
             string message = "";
-            using (DroneDBEntities dc = new DroneDBEntities())
+            try
             {
-                dc.Configuration.ValidateOnSaveEnabled = false; // Avoid Confirmation password does not match on save changes
-                var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
-                if (v != null)
+                using (DroneDBEntities dc = new DroneDBEntities())
                 {
-                    v.IsEmailVerified = true;
-                    v.ActivationCode = Guid.NewGuid();
-                    dc.SaveChanges();
-                    Status = true;
-                    message = "Succefully Verified Your Email account and your account is Activate Now";
+                    dc.Configuration.ValidateOnSaveEnabled = false; // Avoid Confirmation password does not match on save changes
+                    var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
+                    if (v != null)
+                    {
+                        v.IsEmailVerified = true;
+                        v.ActivationCode = Guid.NewGuid();
+                        dc.SaveChanges();
+                        Status = true;
+                        message = "Succefully Verified Your Email account and your account is Activate Now";
+                    }
+                    else
+                    {
+                        message = "Invalid Request";
+                        Status = false;
+                    }
+
                 }
-                else
-                {
-                   message = "Invalid Request";
-                    Status = false;
-                }
+            }
+            catch (Exception)
+            {
+                message = "Invalid Request";
+                Status = false;
 
             }
+            
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View();
@@ -176,31 +186,40 @@ namespace DroneMainAdmin.Controllers
         {
             bool Status = false;
             string message = "";
-            using (DroneDBEntities dc = new DroneDBEntities())
+            try
             {
-                dc.Configuration.ValidateOnSaveEnabled = false; // Avoid Confirmation password does not match on save changes
-                var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
-                if (v != null)
+                using (DroneDBEntities dc = new DroneDBEntities())
                 {
-                    v.IsEmailVerified = true;
-                    var changepass = v.Password;
-                    v.Password = rnd.Next(0003000,99999999).ToString();
-                    v.ActivationCode = Guid.NewGuid();
-                    dc.SaveChanges();
-                    SendChangePassword(v.EmailID, v.ActivationCode.ToString(), "");
-                    Status = true;
-                    message = "Succefully Change Your Password";
-                }
-                else
-                {
-                    message = "Invalid Request";
-                    Status = false;
-                }
+                    dc.Configuration.ValidateOnSaveEnabled = false; // Avoid Confirmation password does not match on save changes
+                    var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
+                    if (v != null)
+                    {
+                        v.IsEmailVerified = true;
+                        var changepass = v.Password;
+                        v.Password = rnd.Next(0003000, 99999999).ToString();
+                        v.ActivationCode = Guid.NewGuid();
+                        dc.SaveChanges();
+                        SendChangePassword(v.EmailID, v.ActivationCode.ToString(), "");
+                        Status = true;
+                        message = "Succefully Change Your Password";
+                    }
+                    else
+                    {
+                        message = "Invalid Request";
+                        Status = false;
+                    }
 
+                }
+            }
+            catch (Exception)
+            {
+
+                message = "Invalid Request";
+                Status = false;
             }
             ViewBag.Message = message;
             ViewBag.Status = Status;
-            return View();
+            return RedirectToAction("Login","User");
         }
         [HttpGet]
         [AllowAnonymous]
@@ -304,9 +323,9 @@ namespace DroneMainAdmin.Controllers
                         {
                             try
                             {
-                                    EC.ActivationCode = Guid.NewGuid();
+                                    EC.GlobalID = Guid.NewGuid();
                                     dc.SaveChanges();
-                                    ForgetPassChange(EC.ActivationCode.ToString());
+                                    ForgetPassChange(EC.GlobalID.ToString());
                                     message = "Forget Password Link has been successfully Sent To your Email Account Please Check Your Email Account:  " + user.EmailID;
                                     Status = true;
                             }
@@ -344,15 +363,15 @@ namespace DroneMainAdmin.Controllers
             string message = "";
             using (DroneDBEntities dc = new DroneDBEntities())
             {
-                dc.Configuration.ValidateOnSaveEnabled = false; // Avoid Confirmation password does not match on save changes
+                dc.Configuration.ValidateOnSaveEnabled = false;// Avoid Confirmation password does not match on save changes
                 try
                 {
-                     var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
+                     var v = dc.Users.Where(a => a.GlobalID == new Guid(id)).FirstOrDefault();
                     if (v != null)
                     {
                         var changePass = user.Password;
                         changePass = Crypto.Hash(user.Password);
-                        v.ActivationCode = Guid.NewGuid();
+                        v.GlobalID = Guid.NewGuid();
                         v.Password = changePass;
                         dc.SaveChanges();
                         status = true;

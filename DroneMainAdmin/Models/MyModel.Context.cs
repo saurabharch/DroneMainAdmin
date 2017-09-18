@@ -29,5 +29,7 @@ namespace DroneMainAdmin.Models
         public virtual DbSet<country> countries { get; set; }
         public virtual DbSet<state> states { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<EmailType> EmailTypes { get; set; }
+        public virtual DbSet<CompainSet> CompainSets { get; set; }
     }
 }

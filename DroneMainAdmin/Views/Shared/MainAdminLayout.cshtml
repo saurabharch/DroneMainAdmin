@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - Drone Fest 2017</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="~/Scripts/Datatable/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.9/js/dataTables.checkboxes.min.js"></script>
+    <!-- Open Sans for body font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <!-- Cabin for Title -->
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet" type="text/css">
+    <!-- Pacifico for Logo   -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:700, 600,500,400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    @*<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">*@
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <link href="~/Content/slick.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" /><script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/Content/jquery-ui.theme.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <!-- Slick Slider -->
+
+    <script src="~/Scripts/js/slick.js"></script>
+    <!-- Add fancyBox -->
+
+    <script src="~/Scripts/js/jquery.facybox.pack.js"></script>
+    <!-- Wow animation -->
+
+    <script src="~/Scripts/js/wow.js"></script>
+    <!-- Off-canvas Menu -->
+
+    <script src="~/Scripts/classie.js"></script>
+    <!-- Custom js -->
+
+    <script src="~/Scripts/js/custom.js"></script>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <script src="~/Scripts/notify.min.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/intlTelInput.css" rel="stylesheet" />
+    <link href="~/Content/css/demo.css" rel="stylesheet" />
+    <link href="~/Content/mediaQuery.css" rel="stylesheet" />
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/themes/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/themes/theme-color/default-theme.css" rel="stylesheet" />
+    <link href="~/Content/Datatable/css/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Scripts/Datatable/jquery.dataTables.min.js"></script>
+    <style>
+        span.field-validation-error {
+            color: red;
+        }
+    </style>
+    <style type="text/css">
+        .fancybox-margin {
+            margin-right: 0px;
+        }
+    </style>
+    <style>
+        .ad {
+            position: absolute;
+            width: 300px;
+            height: 250px;
+            border: 1px solid #ddd;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 250px;
+            z-index: 10;
+        }
+
+            .ad .close {
+                position: absolute;
+                font-family: 'ionicons';
+                width: 20px;
+                height: 20px;
+                color: #fff;
+                background-color: #999;
+                font-size: 20px;
+                left: -20px;
+                top: -1px;
+                display: table-cell;
+                vertical-align: middle;
+                cursor: pointer;
+                text-align: center;
+            }
+    </style>
+    <script type="text/javascript">
+			$(function() {
+				$('.close').click(function() {
+					$('.ad').css('display', 'none');
+				})
+			})
+    </script>
+</head>
+<body>
+    <div class="header" style="margin-top: -50px;">
+        <div class="logo">
+            <i class="fa fa-tachometer"></i>
+            <span>Dashboard</span>
+        </div>
+        <a href="/TeamList/Index" class="nav-trigger"><span></span></a>
+        <a style="color:white;"> welcome @HttpContext.Current.User.Identity.Name</a>
+    </div>
+    <div class="side-nav">
+        @*<div class="logo">
+            <i class="fa fa-tachometer"></i>
+            <span>Drone Fest</span>
+        </div>*@
+        <nav>
+            <ul>
+                <li>
+                    <a href="/Home/Index">
+                        <span><i class="fa fa-home"></i></span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/User/Registration">
+                        <span><i class="fa fa-user"></i></span>
+                        <span>Register</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/TeamList/Index">
+                        <span><i class="fa fa-users"></i></span>
+                        <span>Teams</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/TamList/annoucment">
+                        <span><i class="fa fa-bullhorn"></i></span>
+                        <span>Annoucment</span>
+                    </a>
+                </li>
+                <li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            <a href="#" onclick="javascript:document.getElementById('logoutForm').submit()">
+                                <span ><i class="fa fa-sign-out" aria-hidden="true"></i> </span>
+                                <span>Logout</span>
+                            </a>
+                        }
+                    }
+                </li>
+                
+
+            </ul>
+        </nav>
+    </div>
+    <div class="main">
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+        <footer id="footer" class="foot-fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com/promax.hd.7" target="_blank">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="https://twitter.com/promaxhdevents" target="_blank">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/sameer-mardikar-06a5aa9?authType=NAME_SEARCH&amp;authToken=K3Fa&amp;locale=en_US&amp;trk=tyah&amp;trkInfo=clickedVertical%3Amynetwork%2CclickedEntityId%3A28342738%2CauthType%3ANAME_SEARCH%2Cidx%3A1-1-1%2CtarId%3A1464415831167%2Ctas%3Asameer" target="_blank">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        </div>
+                        <div class="footer-text">
+                            <p> <a href="#" target="_blank" title="DFest">Powerd By - ProMax</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        @RenderSection("Scripts", required: false);
+</body>
+</html>

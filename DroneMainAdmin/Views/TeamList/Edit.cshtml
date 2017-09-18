@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-md-12">
                                             <label style="color:whitesmoke;margin-left:-8px;">Contact No.</label>
-                                            @Html.EditorFor(a => a.ContactNo, new { @class = "form-control", @placeholder = "eg. +91 9876543210" })
+                                            @Html.EditorFor(a => a.ContactNo, new { htmlAttributes = new { type = "tel", @class = "intl-tel-input form-control", @id = "mobile-number", @placeholder = "eg. +91 9876543210" } })
                                             @Html.ValidationMessageFor(a => a.ContactNo, "", new { @class = "text-danger" })
                                             <div class="col-md-11">
                                                 <span id="valid-msg" class="alert alert-success glyphicon glyphicon glyphicon-ok hide" role="alert">Valid</span>
@@ -250,7 +250,7 @@
             });
         });
     </script>
-    <script>
+    @*<script>
         $(document).ready(function(){
             var myformdata = $("#myForm").serialize();
             $.ajax({
@@ -263,6 +263,6 @@
                 }
             })
         });
-    </script>
+    </script>*@
 
     }

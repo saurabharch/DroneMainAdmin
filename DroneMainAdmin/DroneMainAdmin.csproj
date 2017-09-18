@@ -168,6 +168,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -321,6 +322,7 @@
     <Content Include="Scripts\js\jquery.facybox.pack.js" />
     <Content Include="Scripts\js\slick.js" />
     <Content Include="Scripts\js\wow.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\utils.js" />
@@ -338,7 +340,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Annoucement.cs">
+      <DependentUpon>DemoPromax.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\city.cs">
+      <DependentUpon>DemoPromax.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompainSet.cs">
       <DependentUpon>DemoPromax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\country.cs">
@@ -358,6 +366,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoPromax.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmailType.cs">
+      <DependentUpon>DemoPromax.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Extended\User.cs" />
     <Compile Include="Models\MyModel.Context.cs">
@@ -406,6 +417,8 @@
     <Content Include="Views\TeamList\Edit.cshtml" />
     <Content Include="Views\TeamList\GetTeams.cshtml" />
     <Content Include="Views\TeamList\AddOrEdit.cshtml" />
+    <Content Include="Views\Shared\MainAdminLayout.cshtml" />
+    <Content Include="Views\TeamList\PostAnnocement.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

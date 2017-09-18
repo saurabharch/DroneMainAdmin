@@ -13,6 +13,16 @@
           <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="state_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CompainSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Hostname" Type="nvarchar" MaxLength="250" />
+          <Property Name="Portno" Type="int" />
+        </EntityType>
         <EntityType Name="countries">
           <Key>
             <PropertyRef Name="id" />
@@ -20,6 +30,16 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="sortname" Type="nvarchar" MaxLength="3" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UniId" Type="uniqueidentifier" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Subjectmsg" Type="nvarchar" MaxLength="200" />
+          <Property Name="BodyMsg" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="states">
           <Key>
@@ -33,7 +53,7 @@
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -71,7 +91,9 @@
         </Association>
         <EntityContainer Name="DroneDBModelStoreContainer">
           <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompainSet" EntityType="Self.CompainSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="countries" EntityType="Self.countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailType" EntityType="Self.EmailType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_states_countries" Association="Self.FK_states_countries">
@@ -146,6 +168,8 @@
             <End Role="country" EntitySet="countries" />
             <End Role="state" EntitySet="states" />
           </AssociationSet>
+          <EntitySet Name="EmailTypes" EntityType="DroneDBModel.EmailType" />
+          <EntitySet Name="CompainSets" EntityType="DroneDBModel.CompainSet" />
         </EntityContainer>
         <Association Name="FK_states_countries">
           <End Type="DroneDBModel.country" Role="country" Multiplicity="1" />
@@ -159,6 +183,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EmailType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UniId" Type="Guid" />
+          <Property Name="DisplayName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Subjectmsg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BodyMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CompainSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="pass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hostname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Portno" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -218,6 +262,28 @@
                 <ScalarProperty Name="TeamName" ColumnName="TeamName" />
                 <ScalarProperty Name="Decscript" ColumnName="Decscript" />
                 <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTypes">
+            <EntityTypeMapping TypeName="DroneDBModel.EmailType">
+              <MappingFragment StoreEntitySet="EmailType">
+                <ScalarProperty Name="BodyMsg" ColumnName="BodyMsg" />
+                <ScalarProperty Name="Subjectmsg" ColumnName="Subjectmsg" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="UniId" ColumnName="UniId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompainSets">
+            <EntityTypeMapping TypeName="DroneDBModel.CompainSet">
+              <MappingFragment StoreEntitySet="CompainSet">
+                <ScalarProperty Name="Portno" ColumnName="Portno" />
+                <ScalarProperty Name="Hostname" ColumnName="Hostname" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -4,12 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c59eb002ed59409cbe543c89f38ceddb" Name="Diagram1">
+      <Diagram DiagramId="c59eb002ed59409cbe543c89f38ceddb" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="DroneDBModel1.city" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DroneDBModel1.country" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DroneDBModel1.state" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DroneDBModel1.User" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector ManuallyRouted="false" Association="DroneDBModel1.FK_states_countries" />
+        <EntityTypeShape EntityType="DroneDBModel1.CompainSet" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DroneDBModel1.EmailType" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DroneDBModel1.Annoucement" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

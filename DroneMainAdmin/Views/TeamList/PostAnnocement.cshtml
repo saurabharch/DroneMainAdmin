@@ -1,0 +1,77 @@
+﻿@model DroneMainAdmin.Models.Annoucement
+
+@{
+    ViewBag.Title = "PostAnnocement";
+    Layout = "~/Views/Shared/MainAdminLayout.cshtml";
+}
+
+<h2> <i class="fa fa-bullhorn"></i> Post Annocement</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row col-lg-12 col-sm-8 col-md-12 ml-3 mb-5" style="margin-left:12px;">
+            <div class="flex">
+                
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-12">
+                                @Html.EditorFor(model => model.NewTittle, new { htmlAttributes = new { @class = "form-control mb-4", @placeholder = "Add Title or Annoucment Header" } })
+                                @Html.ValidationMessageFor(model => model.NewTittle, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-12">
+                                @Html.TextAreaFor(model => model.NewMessage, new { htmlAttributes = new { @class = "form-control mb-4"} })
+                                @Html.ValidationMessageFor(model => model.NewMessage, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                             <div class="col-md-offset-3 col-md-12">
+                                @Html.EditorFor(model => model.ImageIcon, new { htmlAttributes = new { @class = "form-control mb-4", @placeholder = "Image Url" } })
+                                @Html.ValidationMessageFor(model => model.ImageIcon, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-md-offset-3 col-md-12">
+                                @Html.EditorFor(model => model.tagName, new { htmlAttributes = new { @class = "form-control mb-4", @placeholder = "Tag Name" } })
+                                @Html.ValidationMessageFor(model => model.tagName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-12">
+                                <input type="submit" value="Create" class="btn btn-md btn-success mb-4" />
+                            </div>
+                        </div><br /><br />
+                    
+                </div>
+            </div>
+        </div>
+}
+
+@section Scripts{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var textarea = document.getElementsByTagName('textarea');
+            textarea[0].style.width = "100%";
+            textarea[0].style.backgroundColor= "#fff";
+            textarea[0].style.color = "#555";
+            textarea[0].style.padding = "6px 12px";
+            textarea[0].style.border = "1px solid #ccc";
+            textarea[0].style.borderRadius = "4px";
+            textarea[0].placeholder = "News or Annoucements Here";
+            textarea[0].style.fontSize = "12";
+            textarea[0].style.lineHeight = "2.42857143";
+        });
+    </script>
+}

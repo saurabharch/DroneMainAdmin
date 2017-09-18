@@ -19,7 +19,7 @@ namespace DroneMainAdmin.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string EmailID { get; set; }
-        public System.DateTime DateOfBirth { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Password { get; set; }
         public string ContactNo { get; set; }
         public string AddresL { get; set; }
@@ -37,5 +37,6 @@ namespace DroneMainAdmin.Models
         public string TeamName { get; set; }
         public string Decscript { get; set; }
         public string Pincode { get; set; }
+        public System.Guid GlobalID { get; set; }
     }
 }
